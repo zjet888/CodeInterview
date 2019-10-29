@@ -1,0 +1,324 @@
+Find the longest substring without repeating characters (In top 8 languages for coding interview)
+
+Given a string str, find the length of the longest substring without repeating characters.
+
+For “ABDEFGABEF”, the longest substring is “BDEFGA” and “DEFGAB”, with length 6.
+For “BBBB” the longest substring is “B”, with length 1.
+For “neatcoding” the longest substring is “neatcodi”, with length 8.
+
+The desired time complexity is O(n) where n is the length of the string.
+
+We are going to loop through this string character by character
+Check this character is inside the current substring, if yes, save the current substring into substring collection, create a new substring using this character as the starting value;
+                                                           if no, add this character to the current substring;
+
+At this point, the loop is over, check if the current substring is empty, if yes, do nothing
+                                                                          if no, add it to the substring collection
+
+
+We set an object to store the longest substring,
+Now, let's loop through the substring collection, and find the longest one                    
+    check if the current substring is longer, if yes, replace the longest string
+                                              if no, do nothing
+
+In the end, we have the longest substring.
+
+Let's code.
+
+In Javascript:
+
+returnLongestNonRepeatSubString(s){
+    if(!s){
+      return "";
+    }
+ 
+    let subCollection = [];
+    let currentSub = "";
+    for(let i = 0; i < s.length; i ++) {
+      let c = s[i];
+      if(currentSub.indexOf(c) === -1) {
+        currentSub += c;
+      } 
+      else {
+        subCollection.push(currentSub);
+        currentSub = "" + c;
+      }
+    }
+ 
+    if(currentSub.length > 0){
+      subCollection.push(currentSub);
+    }
+ 
+    let longest = ""; 
+    for(let i = 0 ; i < subCollection.length ; i ++) {
+      let sub = subCollection[i];
+      if(sub.length > longest.length)  {
+        longest = sub;
+      }
+    }
+ 
+    return longest;
+  }
+ 
+  
+
+
+In C#:
+  string returnLongestNonRepeatSubString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return "";
+            }
+
+            List<string> subCollection = new List<string>();
+            string currentSub = "";
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                if (currentSub.IndexOf(c) == -1)
+                {
+                    currentSub += c;
+                }
+                else
+                {
+                    subCollection.Add(currentSub);
+                    currentSub = "" + c;
+                }
+            }
+
+            if (currentSub.Length > 0)
+            {
+                subCollection.Add(currentSub);
+            }
+
+            string longest = "";
+            for (int i = 0; i < subCollection.Count; i++)
+            {
+                string sub = subCollection[i];
+                if (sub.Length > longest.Length)
+                {
+                    longest = sub;
+                }
+            }
+
+            return longest;
+        }
+
+In Java:
+
+
+String returnLongestNonRepeatSubString(String s)
+{
+   if (s == null || s.length() == 0)
+   {
+       return "";
+   }
+
+   List<String> subCollection = new ArrayList<String>();
+   String currentSub = "";
+   for (int i = 0; i < s.length(); i++)
+   {
+       char c = s.charAt(i);
+       if (currentSub.indexOf(c) == -1)
+       {
+           currentSub += c;
+       }
+       else
+       {
+           subCollection.add(currentSub);
+           currentSub = "" + c;
+       }
+   }
+
+   if (currentSub.length() > 0)
+   {
+       subCollection.add(currentSub);
+   }
+
+   String longest = "";
+   for (int i = 0; i < subCollection.size(); i++)
+   {
+       String sub = subCollection.get(i);
+       if (sub.length() > longest.length())
+       {
+           longest = sub;
+       }
+   }
+
+   return longest;
+}
+
+
+In Kotlin:
+
+fun returnLongestNonRepeatSubString(s: String?): String {
+   if (s == null || s.length == 0) {
+       return ""
+   }
+
+   val subCollection = ArrayList<String>()
+   var currentSub = ""
+   for (i in 0 until s.length) {
+       val c = s[i]
+       if (currentSub.indexOf(c) == -1) {
+           currentSub += c
+       } else {
+           subCollection.add(currentSub)
+           currentSub = "" + c
+       }
+   }
+
+   if (currentSub.length > 0) {
+       subCollection.add(currentSub)
+   }
+
+   var longest = ""
+   for (i in subCollection.indices) {
+       val sub = subCollection[i]
+       if (sub.length > longest.length) {
+           longest = sub
+       }
+   }
+
+   return longest
+}
+
+
+
+
+In Golang:
+
+
+func returnLongestNonRepeatSubString(s string) string {
+  if len(s) == 0 {
+     return ""
+  }
+  subCollection := make([]string, 1)
+  currentSub := ""
+
+  for i := 0; i < len(s); i++ {
+     var c = s[i]
+     if !strings.Contains(currentSub, string(c)) {
+        currentSub += string(c)
+     } else {
+        subCollection = append(subCollection, currentSub)
+        currentSub = string(c)
+     }
+  }
+
+  if len(currentSub) > 0 {
+     subCollection = append(subCollection, currentSub)
+  }
+
+  var longest = ""
+
+  for _, sub := range subCollection {
+     if  len(sub) > len(longest) {
+        longest = sub
+     }
+  }
+  return longest
+}
+
+In c++:
+
+string
+returnLongestNonRepeatSubString (const string & s)
+{
+    if (s.empty ())
+    {
+        return "";
+    }
+    std::vector <string> subCollection;
+    string currentSub;
+    for (int i = 0; i < s.length (); i++)
+    {
+        char c = s[i];
+        if (currentSub.find (c) == -1)
+        {
+            currentSub += c;
+        }
+        else
+        {
+            subCollection.push_back (currentSub);
+            currentSub = string (1, c);
+        }
+    }
+
+    if(!currentSub.empty())
+    {
+        subCollection.push_back (currentSub);
+    }
+
+    string longest = "";
+
+    for (int i = 0; i < subCollection.size(); i++)
+    {
+        string sub = subCollection.at(i);
+        if (sub.length() > longest.length())
+        {
+            longest = sub;
+        }
+    }
+    return longest;
+}
+
+
+In Python:
+def returnLongestNonRepeatSubString(s):
+    if not s:
+        return ""
+    subCollection = []
+    currentSub = ""
+    for c in s:
+        if (currentSub.find(c) == -1):
+            currentSub += c
+        else:
+            subCollection.append(currentSub)
+            currentSub = c
+    
+    if currentSub:
+        subCollection.append(currentSub)
+    
+    longest = ""
+    for sub in subCollection:
+        if (len(sub) > len(longest)):
+            longest = sub
+            
+    return longest
+
+
+In Swift:
+func returnLongestNonRepeatSubString (s: String) -> String {
+ 
+  if (s == nil || s.isEmpty) {
+           return ""
+  }
+  var subCollection =  [String]()
+  var currentSub = ""
+  
+  for c in s {
+      let i = currentSub.firstIndex(of: c)
+      if(i == nil) {
+          currentSub = currentSub + String(c)
+      }
+      else {
+          subCollection.append(currentSub);
+          currentSub = String(c)
+      }
+  }
+ 
+   var longest = ""
+   for sub in subCollection {
+        if sub.length > longest.length {
+            longest = sub
+        }
+   }
+ 
+   return longest
+ 
+}
+
+
+
