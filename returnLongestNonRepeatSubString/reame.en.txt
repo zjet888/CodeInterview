@@ -1,6 +1,8 @@
-Find the longest substring without repeating characters (In top 8 languages for coding interview)
+Use 8 languages (Javascript,Java,C#,Swift,Kotlin,Python,C++,Golang) to find the longest substring
 
-Given a string str, find the length of the longest substring without repeating characters.
+I am trying to use the fastest way in each language, if you find any better solution, please let me know.
+
+Given a string str, find the longest substring without repeating characters.
 
 For “ABDEFGABEF”, the longest substring is “BDEFGA” and “DEFGAB”, with length 6.
 For “BBBB” the longest substring is “B”, with length 1.
@@ -27,21 +29,26 @@ Let's code.
 
 In Javascript:
 
-returnLongestNonRepeatSubString(s){
+returnLongestNonRepeatSubString = (s) => {
     if(!s){
       return "";
     }
  
     let subCollection = [];
     let currentSub = "";
+    let currentSet = new Set;
     for(let i = 0; i < s.length; i ++) {
       let c = s[i];
-      if(currentSub.indexOf(c) === -1) {
-        currentSub += c;
+      if(!currentSet.has(c)) {
+        currentSub +=c;
+        currentSet.add(c);
       } 
       else {
         subCollection.push(currentSub);
+        currentSub = [];
+        currentSet.clear();
         currentSub = "" + c;
+        currentSet.add(c);
       }
     }
  
@@ -61,96 +68,138 @@ returnLongestNonRepeatSubString(s){
   }
  
   
-
+console.log(returnLongestNonRepeatSubString("ABDEFGABEF"))
+console.log(returnLongestNonRepeatSubString("BBBB"))
+console.log(returnLongestNonRepeatSubString("neatcoding"))
 
 In C#:
-  string returnLongestNonRepeatSubString(string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return "";
-            }
 
-            List<string> subCollection = new List<string>();
-            string currentSub = "";
-            for (int i = 0; i < s.Length; i++)
-            {
-                char c = s[i];
-                if (currentSub.IndexOf(c) == -1)
-                {
-                    currentSub += c;
-                }
-                else
-                {
-                    subCollection.Add(currentSub);
-                    currentSub = "" + c;
-                }
-            }
+    
+using System;
+using System.Text;
+using System.Collections.Generic;
+					
+public class NeatCoding
+{
+	public static void Main(string[] args)
+	{
+		//Your code goes here
+		Console.WriteLine(returnLongestNonRepeatSubString("ABDEFGABEF"));
+		Console.WriteLine(returnLongestNonRepeatSubString("BBBB"));
+		Console.WriteLine(returnLongestNonRepeatSubString("neatcoding"));
+	}
 
-            if (currentSub.Length > 0)
-            {
-                subCollection.Add(currentSub);
-            }
+	static string returnLongestNonRepeatSubString(string s)
+	{
+		if (string.IsNullOrEmpty(s))
+		{
+			return "";
+		}
 
-            string longest = "";
-            for (int i = 0; i < subCollection.Count; i++)
-            {
-                string sub = subCollection[i];
-                if (sub.Length > longest.Length)
-                {
-                    longest = sub;
-                }
-            }
+		List<string> subCollection = new List<string>();
+		StringBuilder currentSub = new StringBuilder();
+		HashSet<char> hashChar = new HashSet<char>();
+		for (int i = 0; i < s.Length; i++)
+		{
+			char c = s[i];
+			if (!hashChar.Contains(c))
+			{
+				hashChar.Add(c);
+				currentSub.Append(c);
+			}
+			else
+			{
+				subCollection.Add(currentSub.ToString());
+				hashChar.Clear();
+				currentSub.Clear();				
+				currentSub.Append(c);
+				hashChar.Add(c);
+			}
+		}
 
-            return longest;
-        }
+		if (currentSub.Length > 0)
+		{
+			subCollection.Add(currentSub.ToString());
+		}
+
+		string longest = "";
+		for (int i = 0; i < subCollection.Count; i++)
+		{
+			string sub = subCollection[i];
+			if (sub.Length > longest.Length)
+			{
+				longest = sub;
+			}
+		}
+
+		return longest;
+	}
+}
 
 In Java:
 
+import java.util.*;
 
-String returnLongestNonRepeatSubString(String s)
-{
-   if (s == null || s.length() == 0)
-   {
-       return "";
-   }
+public class NeatCoding{
 
-   List<String> subCollection = new ArrayList<String>();
-   String currentSub = "";
-   for (int i = 0; i < s.length(); i++)
-   {
-       char c = s.charAt(i);
-       if (currentSub.indexOf(c) == -1)
+     public static void main(String []args){
+        System.out.println(returnLongestNonRepeatSubString("ABDEFGABEF"));
+        System.out.println(returnLongestNonRepeatSubString("BBBB"));
+        System.out.println(returnLongestNonRepeatSubString("neatcoding"));
+     }
+         
+    static String returnLongestNonRepeatSubString(String s)
+    {
+       if (s == null || s.length() == 0)
        {
-           currentSub += c;
+           return "";
        }
-       else
+    
+       List<String> subCollection = new ArrayList<String>();
+       HashSet<Character> set=new HashSet();  
+       StringBuilder currentSub = new StringBuilder();
+       for (int i = 0; i < s.length(); i++)
        {
-           subCollection.add(currentSub);
-           currentSub = "" + c;
+           char c = s.charAt(i);
+           if (!set.contains(c))
+           {
+               currentSub.append(c);
+           }
+           else
+           {
+               set.add(c);
+               subCollection.add(currentSub.toString());
+               currentSub.setLength(0);
+               currentSub.append(c);
+           }
        }
-   }
-
-   if (currentSub.length() > 0)
-   {
-       subCollection.add(currentSub);
-   }
-
-   String longest = "";
-   for (int i = 0; i < subCollection.size(); i++)
-   {
-       String sub = subCollection.get(i);
-       if (sub.length() > longest.length())
+    
+       if (currentSub.length() > 0)
        {
-           longest = sub;
+           subCollection.add(currentSub.toString());
        }
-   }
-
-   return longest;
+    
+       String longest = "";
+       for (int i = 0; i < subCollection.size(); i++)
+       {
+           String sub = subCollection.get(i);
+           if (sub.length() > longest.length())
+           {
+               longest = sub;
+           }
+       }
+    
+       return longest;
+    }
 }
 
-
 In Kotlin:
+
+fun main() {
+    println(returnLongestNonRepeatSubString("ABDEFGABEF"))
+    println(returnLongestNonRepeatSubString("BBBB"))
+    println(returnLongestNonRepeatSubString("neatcoding"))
+}
 
 fun returnLongestNonRepeatSubString(s: String?): String {
    if (s == null || s.length == 0) {
@@ -159,13 +208,17 @@ fun returnLongestNonRepeatSubString(s: String?): String {
 
    val subCollection = ArrayList<String>()
    var currentSub = ""
+   var currentSet: HashSet<Char> = HashSet()  
    for (i in 0 until s.length) {
        val c = s[i]
-       if (currentSub.indexOf(c) == -1) {
+       if (!currentSet.contains(c)) {
            currentSub += c
+           currentSet.add(c)
        } else {
            subCollection.add(currentSub)
            currentSub = "" + c
+           currentSet.clear() 
+           currentSet.add(c)
        }
    }
 
@@ -184,31 +237,48 @@ fun returnLongestNonRepeatSubString(s: String?): String {
    return longest
 }
 
-
-
-
 In Golang:
+
+package main
+
+import (
+	"fmt"
+	"bytes"
+)
+
+func main() {
+	fmt.Println(returnLongestNonRepeatSubString("ABDEFGABEF"))
+	fmt.Println(returnLongestNonRepeatSubString("BBBB"))
+	fmt.Println(returnLongestNonRepeatSubString("neatcoding"))
+}
 
 
 func returnLongestNonRepeatSubString(s string) string {
   if len(s) == 0 {
      return ""
   }
-  subCollection := make([]string, 1)
-  currentSub := ""
+  var subCollection []string
+  var currentSub bytes.Buffer
+  currentMap := map[byte]bool{}
 
   for i := 0; i < len(s); i++ {
      var c = s[i]
-     if !strings.Contains(currentSub, string(c)) {
-        currentSub += string(c)
+
+    _, ok := currentMap[c]
+    if !ok {
+        currentSub.WriteByte(c)
+	currentMap[c] = true
      } else {
-        subCollection = append(subCollection, currentSub)
-        currentSub = string(c)
+        subCollection = append(subCollection, currentSub.String())
+        currentSub .Reset()
+        currentSub.WriteByte(c)
+        currentMap = map[byte]bool{}
+	currentMap[c] = true
      }
   }
 
-  if len(currentSub) > 0 {
-     subCollection = append(subCollection, currentSub)
+  if currentSub.Len() > 0 {
+     subCollection = append(subCollection, currentSub.String())
   }
 
   var longest = ""
@@ -223,6 +293,14 @@ func returnLongestNonRepeatSubString(s string) string {
 
 In c++:
 
+
+#include <iostream>
+#include <vector>
+#include <set>
+#include <sstream>
+using namespace std;
+
+
 string
 returnLongestNonRepeatSubString (const string & s)
 {
@@ -231,24 +309,30 @@ returnLongestNonRepeatSubString (const string & s)
         return "";
     }
     std::vector <string> subCollection;
-    string currentSub;
+    stringstream currentSub;
+    set <char> currentSet;
     for (int i = 0; i < s.length (); i++)
     {
         char c = s[i];
-        if (currentSub.find (c) == -1)
+        if (currentSet.find (c) == currentSet.end())
         {
-            currentSub += c;
+            currentSub << c;
+            currentSet.insert(c);
         }
         else
         {
-            subCollection.push_back (currentSub);
-            currentSub = string (1, c);
+            subCollection.push_back (currentSub.str());
+            currentSub.clear();
+            currentSub << c;
+             
+            currentSet.clear();
+            currentSet.insert(c);
         }
     }
 
-    if(!currentSub.empty())
+    if( currentSub.gcount() > 0)
     {
-        subCollection.push_back (currentSub);
+        subCollection.push_back (currentSub.str());
     }
 
     string longest = "";
@@ -264,22 +348,36 @@ returnLongestNonRepeatSubString (const string & s)
     return longest;
 }
 
+int main()
+{
+    cout<<returnLongestNonRepeatSubString("ABDEFGABEF")<<std::endl;
+    cout<<returnLongestNonRepeatSubString("BBBB")<<std::endl;
+    cout<<returnLongestNonRepeatSubString("neatcoding")<<std::endl;
+
+    return 0;
+}
+
 
 In Python:
+
 def returnLongestNonRepeatSubString(s):
     if not s:
         return ""
     subCollection = []
-    currentSub = ""
+    currentSub = []
+    currentSet = set()
     for c in s:
-        if (currentSub.find(c) == -1):
-            currentSub += c
+        if (c not in currentSet):
+            currentSet.add(c)
+            currentSub.append(c)
         else:
-            subCollection.append(currentSub)
-            currentSub = c
+            subCollection.append(''.join(currentSub))
+            currentSub = [c]
+            currentSet.clear()
+            currentSet.add(c)
     
-    if currentSub:
-        subCollection.append(currentSub)
+    if len(currentSub) > 0:
+        subCollection.append(''.join(currentSub))
     
     longest = ""
     for sub in subCollection:
@@ -288,8 +386,16 @@ def returnLongestNonRepeatSubString(s):
             
     return longest
 
+print(returnLongestNonRepeatSubString("ABDEFGABEF"))
+print(returnLongestNonRepeatSubString("BBBB"))
+print(returnLongestNonRepeatSubString("neatcoding"))
+
 
 In Swift:
+
+import Foundation
+
+
 func returnLongestNonRepeatSubString (s: String) -> String {
  
   if (s == nil || s.isEmpty) {
@@ -297,18 +403,25 @@ func returnLongestNonRepeatSubString (s: String) -> String {
   }
   var subCollection =  [String]()
   var currentSub = ""
-  
+  var currentSet = Set<Character>()
   for c in s {
-      let i = currentSub.firstIndex(of: c)
-      if(i == nil) {
-          currentSub = currentSub + String(c)
+       currentSet.contains(c)
+      if !currentSet.contains(c)  {
+          currentSet.insert(c)
+          currentSub.append(c)
       }
       else {
           subCollection.append(currentSub);
+          currentSet = []
           currentSub = String(c)
+          currentSet.insert(c)
       }
+  } 
+
+  if currentSub.count > 0 {
+        subCollection.append(currentSub);
   }
- 
+
    var longest = ""
    for sub in subCollection {
         if sub.length > longest.length {
@@ -319,6 +432,10 @@ func returnLongestNonRepeatSubString (s: String) -> String {
    return longest
  
 }
+print(returnLongestNonRepeatSubString(s: "ABDEFGABEF"))
+print(returnLongestNonRepeatSubString(s: "BBBB"))
+print(returnLongestNonRepeatSubString(s: "neatcoding"))
+
 
 
 
