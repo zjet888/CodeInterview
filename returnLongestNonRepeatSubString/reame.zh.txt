@@ -1,4 +1,5 @@
 用八种编程语言来找出最长的字符串
+用八种编程语言(Javascript,Java,C#,Swift,Kotlin,Python,C++,Golang)来找出最长的字符串
 
 我试图使用最快的算法来在每种语言中完成任务要求，如果你找到了更好的方案，请告诉我一下。
 
@@ -48,7 +49,6 @@ returnLongestNonRepeatSubString = (s) => {
       } 
       else {
         subCollection.push(currentSub);
-        currentSub = [];
         currentSet.clear();
         currentSub = "" + c;
         currentSet.add(c);

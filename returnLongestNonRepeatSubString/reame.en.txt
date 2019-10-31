@@ -45,7 +45,6 @@ returnLongestNonRepeatSubString = (s) => {
       } 
       else {
         subCollection.push(currentSub);
-        currentSub = [];
         currentSet.clear();
         currentSub = "" + c;
         currentSet.add(c);
