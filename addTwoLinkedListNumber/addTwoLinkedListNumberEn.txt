@@ -1,0 +1,681 @@
+Crack Code Interview-Add two linked lists (8 programming languages)
+
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contains a single digit. Add the two numbers and return them as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Example:
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+
+Solution:
+
+The linked list node data structure contains the value and the next node.
+Adding two linked lists to add operations to each corresponding element;
+If the calculation result exceeds 10, it needs to be shifted to the high position;
+If there is a linked list, you need to add the remaining elements in the separate linked list with the last shift value of 0 or 1.
+Finally check the shift value, if not zero, add as a new element.
+
+Javascript:
+
+
+class ListNode {
+	constructor(val, next=null) {
+    this.val = val;
+	}
+}
+
+
+addTwoNumbers = (l1, l2)=> {
+  let newNode = null;
+  let head = null;
+  let overTen = 0;
+  while(l1 != null && l2 != null) {
+    let sum = l1.val + l2.val + overTen;
+    let v1 = sum % 10;
+    overTen = parseInt(sum / 10);
+    if (head == null) {
+      head = new ListNode(v1);
+      newNode = head;
+    }
+    else {
+      newNode.next = new ListNode(v1);
+      newNode = newNode.next;
+    }
+    l1 = l1.next;
+    l2 = l2.next;
+  }
+
+  let l = !l1? l2 : l1;
+  while(l) {
+    let sum = l.val + overTen;
+    let v1 = sum % 10;
+    overTen = parseInt(sum / 10);
+    newNode.next = new ListNode(v1);
+    newNode = newNode.next;
+    l = l.next;
+  }
+
+  if(overTen != 0) {
+    newNode.next = new ListNode(overTen);
+  }
+  return head;
+};
+
+{
+  let l1 = new ListNode(2);
+  l1.next = new ListNode(4);
+  l1.next.next = new ListNode(3);
+  let l2 = new ListNode(5);
+  l2.next = new ListNode(6);
+  l2.next.next = new ListNode(4);
+  let l = addTwoNumbers(l1, l2);
+  while(l != null) {
+    console.log(l.val);     
+    l = l.next;
+  }
+  console.log();
+}
+
+{
+  let l1 = new ListNode(1);
+  l1.next = new ListNode(8);
+  let l2 = new ListNode(0);
+  let l = addTwoNumbers(l1, l2);
+  while(l != null) {
+    console.log(l.val);     
+    l = l.next;
+  }
+  console.log();
+}
+
+
+
+
+Java:
+
+import java.util.*;
+public class HelloWorld{
+  static class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+  }
+  public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode newNode = null;
+        ListNode head = null;
+        int overTen = 0;
+        while(l1 != null && l2 != null){
+            int sum = l1.val + l2.val + overTen;
+            int v1 = sum % 10;
+            overTen = sum / 10;
+            if(head == null){
+                head = new ListNode(v1);
+                newNode = head;
+            }
+            else{
+                newNode.next = new ListNode(v1);
+                newNode = newNode.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        
+        ListNode l = l1 == null? l2: l1;
+        
+        while(l != null){
+            int sum = l.val + overTen;
+            int v1 = sum % 10;
+            overTen = sum / 10;
+            newNode.next = new ListNode(v1);
+            newNode = newNode.next; 
+            l = l.next; 
+        } 
+
+        if(overTen != 0){
+           newNode.next = new ListNode(overTen);
+        }
+         
+        return head;
+    }
+     public static void main(String []args){
+         {
+             ListNode l1 = new ListNode(2);
+             l1.next = new ListNode(4);
+             l1.next.next = new ListNode(3);
+             ListNode l2 = new ListNode(5);
+             l2.next = new ListNode(6);
+             l2.next.next = new ListNode(4);
+             ListNode l = addTwoNumbers(l1, l2);
+             while(l != null) {
+                System.out.print(l.val);     
+                l = l.next;
+             }
+             System.out.println();
+         }
+         {
+             ListNode l1 = new ListNode(1);
+             l1.next = new ListNode(8);
+             ListNode l2 = new ListNode(0);
+             ListNode l = addTwoNumbers(l1, l2);
+             while(l != null) {
+                System.out.print(l.val);     
+                l = l.next;
+             }
+             System.out.println();
+         }
+        
+     }
+}
+
+C#:
+
+
+using System;
+class ListNode {
+      public int val;
+      public ListNode next;
+      public ListNode(int x) { val = x; }
+}
+class HelloWorld {
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode newNode = null;
+        ListNode head = null;
+        int overTen = 0;
+        while(l1 != null && l2 != null){
+            int sum = l1.val + l2.val + overTen;
+            int v1 = sum % 10;
+            overTen = sum / 10;
+            if(head == null){
+                head = new ListNode(v1);
+                newNode = head;
+            }
+            else{
+                newNode.next = new ListNode(v1);
+                newNode = newNode.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        
+        ListNode l = l1 == null? l2: l1;
+        
+        while(l != null){
+            int sum = l.val + overTen;
+            int v1 = sum % 10;
+            overTen = sum / 10;
+            newNode.next = new ListNode(v1);
+            newNode = newNode.next; 
+            l = l.next; 
+        } 
+
+        if(overTen != 0){
+           newNode.next = new ListNode(overTen);
+        }
+         
+        return head;
+    }     
+  static void Main() {
+      
+    Console.WriteLine("Hello World");
+    
+       {
+             ListNode l1 = new ListNode(2);
+             l1.next = new ListNode(4);
+             l1.next.next = new ListNode(3);
+             ListNode l2 = new ListNode(5);
+             l2.next = new ListNode(6);
+             l2.next.next = new ListNode(4);
+             ListNode l = addTwoNumbers(l1, l2);
+             while(l != null) {
+                Console.Write(l.val);     
+                l = l.next;
+             }
+             Console.WriteLine();
+         }
+         {
+             ListNode l1 = new ListNode(1);
+             l1.next = new ListNode(8);
+             ListNode l2 = new ListNode(0);
+             ListNode l = addTwoNumbers(l1, l2);
+             while(l != null) {
+                Console.Write(l.val);     
+                l = l.next;
+             }
+             Console.WriteLine();
+         }
+    
+    
+  }
+}
+
+
+Swift:
+
+import Foundation
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+     }
+}
+
+func addTwoNumbers(_ la: ListNode?, _ lb: ListNode?) -> ListNode? {
+    var l1 = la
+    var l2 = lb
+    var newNode: ListNode?
+    var head: ListNode?
+    var overTen: Int = 0
+    while (l1 != nil && l2 != nil) {
+        var sum: Int = l1!.val + l2!.val + overTen
+        var v1 = sum % 10
+        overTen = sum / 10
+        if( head == nil) {
+            head = ListNode(v1)
+            newNode = head;
+        }
+        else {
+            newNode!.next =  ListNode(v1)
+            newNode = newNode!.next
+        }
+        l1 = l1!.next
+        l2 = l2!.next        
+    }
+
+    var l: ListNode? = l1 == nil ? l2 : l1
+    while (l != nil) {
+        var sum = l!.val + overTen
+        var v1 = sum % 10;
+        overTen = sum / 10;
+        newNode!.next = ListNode(v1);
+        newNode = newNode!.next;
+        l = l!.next;
+    }
+
+    if(overTen != 0) {
+        newNode!.next = ListNode(overTen)
+    }
+    return head
+}
+
+func test1() {
+    var l1: ListNode? = ListNode(2)
+    l1!.next = ListNode(4)
+    l1!.next!.next = ListNode(3)
+
+    var l2: ListNode? = ListNode(5)
+    l2!.next = ListNode(6)
+    l2!.next!.next = ListNode(4)
+
+    var l = addTwoNumbers(l1, l2)
+    while(l != nil) {
+        print("\(l!.val)", terminator:"")
+        l = l!.next
+    }
+	print("\n")
+}
+
+func test2() {
+    var l1: ListNode? = ListNode(1)
+    l1!.next = ListNode(8)
+
+    var l2: ListNode? = ListNode(0)
+    var l = addTwoNumbers(l1, l2)
+    while(l != nil) {
+        print("\(l!.val)", terminator:"")
+        l = l!.next
+    }
+	print("\n")
+}
+
+test1()
+test2()
+
+Kotlin:
+
+import kotlin.properties.Delegates
+
+class ListNode {
+    var `val`: Int = 0
+    var next: ListNode? = null
+
+    constructor(v: Int) {
+        this.`val` = v
+    }
+}
+
+
+fun addTwoNumbers(la: ListNode?, lb: ListNode?): ListNode? {
+    var l1: ListNode? = la
+    var l2: ListNode? = lb
+    var newNode: ListNode? = null
+    var head: ListNode? = null
+    var overTen: Int = 0
+
+    while (l1 != null && l2 != null) {
+        var sum: Int = l1?.`val` + l2?.`val` + overTen
+        var v1 = sum % 10
+        overTen = sum / 10
+        if (head == null) {
+            head = ListNode(v1)
+            newNode = head;
+        } else {
+            newNode?.next = ListNode(v1)
+            newNode = newNode?.next
+        }
+        l1 = l1?.next
+        l2 = l2?.next
+    }
+
+    var l: ListNode? = l1
+    if (l1 == null) {
+        l = l2
+    }
+    while (l != null) {
+        var sum = l?.`val` + overTen
+        var v1 = sum % 10;
+        overTen = sum / 10;
+        newNode?.next = ListNode(v1);
+        newNode = newNode?.next;
+        l = l?.next;
+    }
+
+    if (overTen != 0) {
+        newNode?.next = ListNode(overTen)
+    }
+    return head
+}
+
+fun main() {
+
+    test1()
+    test2()
+
+}
+
+private fun test1() {
+    var l1: ListNode? = ListNode(2)
+    l1?.next = ListNode(4)
+    l1?.next?.next = ListNode(3)
+    var l2: ListNode? = ListNode(5)
+    l2?.next = ListNode(6)
+    l2?.next?.next = ListNode(4)
+    var l = addTwoNumbers(l1, l2)
+    while (l != null) {
+        print("${l.`val`}")
+        l = l?.next
+    }
+    println()
+}
+
+private fun test2() {
+    var l1: ListNode? = ListNode(1)
+    l1?.next = ListNode(8)
+    var l2: ListNode? = ListNode(0)
+    var l = addTwoNumbers(l1, l2)
+    while (l != null) {
+        print("${l.`val`}")
+        l = l?.next
+    }
+    println()
+}
+
+Python:
+
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
+    newNode = None
+    head = None
+    overTen = 0
+    while l1 != None and l2 != None:
+        sum = l1.val + l2.val + overTen
+        v1 = sum % 10
+        overTen = int(sum / 10)
+        if head == None:
+            head = ListNode(v1)
+            newNode = head
+        else:
+            newNode.next = ListNode(v1);
+            newNode = newNode.next
+        l1 = l1.next
+        l2 = l2.next
+    
+    l = l1 if l1 != None else l2
+    while l != None:
+        v1 = l.val
+        if overTen != 0:
+            sum = l.val + overTen
+            v1 = sum % 10
+            overTen = int(sum / 10)
+        newNode.next = ListNode(v1);
+        newNode = newNode.next
+        l = l.next
+    if overTen != 0:
+        newNode.next = ListNode(overTen);
+    return head
+
+def test1():
+    l1 = ListNode(2)    
+    l1.next = ListNode(4)    
+    l1.next.next = ListNode(3)
+    
+    l2 = ListNode(5)
+    l2.next = ListNode(6)
+    l2.next.next = ListNode(4)
+    
+    l = addTwoNumbers(l1, l2)
+    while l != None:
+        print(l.val, end = '')
+        l = l.next
+        
+    print()
+
+def test2():
+    l1 = ListNode(1)    
+    l1.next = ListNode(8)    
+    
+    l2 = ListNode(0)
+    l = addTwoNumbers(l1, l2)
+    while l != None:
+        print(l.val, end = '')
+        l = l.next
+    print()
+
+test1()
+
+test2()
+
+
+C++:
+#include <stdio.h>
+#include <iostream>
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+ };
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode *newNode = 0;
+    ListNode *head = 0;
+    int overTen = 0;
+    while(l1 != 0 && l2 != 0) {
+        int sum = l1->val + l2->val + overTen;
+        int v1 = sum % 10;
+        overTen = sum /10;
+        if(head == 0){
+            head = new ListNode(v1);
+            newNode = head;
+        }
+        else {
+            newNode->next = new ListNode(v1);
+            newNode = newNode->next;
+        }
+        delete l1;
+        delete l2;
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+    
+    ListNode* l = l1 != NULL ? l1: l2;
+    while(l != NULL) {
+        int v1 = l->val;
+        if(overTen != 0){
+            int sum = l->val + overTen;
+            v1 = sum % 10;
+            overTen = sum / 10;
+        }
+        newNode->next = new ListNode(v1);
+        newNode = newNode->next; 
+        delete l;
+        l = l->next; 
+    }
+    if(overTen != 0) {
+        newNode->next = new ListNode(overTen);
+    }
+    return head;
+}
+
+void test1 () {
+    ListNode *l1 = new ListNode(2);
+    l1->next = new ListNode(4);
+    l1->next->next = new ListNode(3);
+    
+    ListNode *l2 = new ListNode(5);
+    l2->next = new ListNode(6);
+    l2->next->next = new ListNode(4);
+    
+    ListNode *l = addTwoNumbers(l1, l2);
+    
+    while(l != NULL) {
+        std::cout << l->val;
+        delete l;
+        l = l->next;
+    }
+    std::cout << std::endl;
+}
+
+
+void test2 () {
+    ListNode *l1 = new ListNode(1);
+    l1->next = new ListNode(8);
+
+    ListNode *l2 = new ListNode(0);
+
+    ListNode *l = addTwoNumbers(l1, l2);
+    
+    while(l != NULL) {
+        std::cout << l->val;
+        delete l;
+        l = l->next;
+    }
+    std::cout << std::endl;
+}
+int main()
+{
+    test1();
+    test2();
+    return 0;
+}
+
+
+Golang:
+
+package main
+
+import (
+	"fmt"
+)
+
+type ListNode struct {
+    Val int
+    Next *ListNode
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+    var newNode *ListNode = nil
+    var head *ListNode = nil
+    var overTen = 0
+    for l1 != nil && l2 != nil {
+	sum := l1.Val + l2.Val + overTen
+	v1 := sum % 10
+        overTen = sum /10
+        
+        if head == nil {
+            head = &ListNode{Val: v1}
+            newNode = head
+        } else  {
+            newNode.Next = &ListNode{Val: v1}
+            newNode = newNode.Next
+        }
+	l1 = l1.Next
+        l2 = l2.Next
+    }
+
+    l := l1
+    if l1 == nil {
+        l = l2
+    }
+
+    for l != nil {
+        v1 := l.Val;
+        if overTen != 0{
+            sum := l.Val + overTen
+            v1 = sum % 10
+            overTen = sum / 10
+        }
+        newNode.Next = &ListNode{Val: v1}
+        newNode = newNode.Next
+        l = l.Next
+    }
+    if overTen != 0 {
+        newNode.Next = &ListNode{Val: overTen }
+    }
+
+    return head    
+}
+
+func test1() {
+    l1 := &ListNode {Val: 2}
+    l1.Next = &ListNode {Val: 4}
+    l1.Next.Next = &ListNode {Val: 3}
+    l2 := &ListNode {Val: 5}
+    l2.Next = &ListNode {Val: 6}
+    l2.Next.Next = &ListNode {Val: 4}
+    l := addTwoNumbers(l1, l2)
+    for l != nil {
+        fmt.Printf("%d", l.Val)
+        l = l.Next
+    }
+    fmt.Println();
+}
+
+func test2() {
+    l1 := &ListNode {Val: 1}
+    l1.Next = &ListNode {Val: 8}
+    l2 := &ListNode {Val: 0}
+    l := addTwoNumbers(l1, l2)
+    for l != nil {
+        fmt.Printf("%d", l.Val)
+        l = l.Next
+    }
+    fmt.Println();
+}
+
+func main() {
+    test1()
+    test2()	
+}
+
+
+
+
